@@ -1,0 +1,228 @@
+{
+   "openapi": "3.0.0",
+   "info": {
+      "title": "Desafio Doc Swagger",
+      "description": "This is an API documentation for a challenge",
+      "version": "1.0.0",
+      "contact": {
+         "email": "jmpeixotoc@hotmail.com"
+      }
+   },
+   "paths": {
+      "/users": {
+         "post": {
+            "tags": ["User"],
+            "summary": "Create an user",
+            "description": "Create a new user",
+            "requestBody": {
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "type": "object",
+                        "properties": {
+                           "name": {
+                              "type": "string"
+                           },
+                           "email": {
+                              "type": "string"
+                           }
+                        },
+                        "example": {
+                           "name": "TestName",
+                           "email": "test@email.com"
+                        }
+                     }
+                  }
+               }
+            },
+            "responses": {
+               "201": {
+                  "description": "Created",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "type": "object",
+                           "properties": {
+                              "id": {
+                                 "type": "string"
+                              },
+                              "name": {
+                                 "type": "string"
+                              },
+                              "admin": {
+                                 "type": "boolean",
+                                 "example": false
+                              },
+                              "email": {
+                                 "type": "string"
+                              },
+                              "created_at": {
+                                 "type": "string"
+                              },
+                              "updated_at": {
+                                 "type": "string"
+                              }
+                           }
+                        }
+                     }
+                  }
+               },
+               "400": {
+                  "description": "Bad request. Email já está em uso"
+               }
+            }
+         },
+         "get": {
+            "tags": ["User"],
+            "summary": "List all users",
+            "description": "If the user requesting is an admin, it will return a list of users",
+            "parameters": [
+               {
+                  "name": "user_id",
+                  "in": "header",
+                  "type": "string",
+                  "required": true
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "Success",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "type": "array",
+                           "items": {
+                              "type": "object",
+                              "properties": {
+                                 "id": {
+                                    "type": "string"
+                                 },
+                                 "name": {
+                                    "type": "string"
+                                 },
+                                 "admin": {
+                                    "type": "boolean",
+                                    "example": false
+                                 },
+                                 "email": {
+                                    "type": "string"
+                                 },
+                                 "created_at": {
+                                    "type": "string"
+                                 },
+                                 "updated_at": {
+                                    "type": "string"
+                                 }
+                              }
+                           }
+                        }
+                     }
+                  }
+               }
+            }
+         }
+      },
+      "/users/:user_id/admin": {
+         "patch": {
+            "tags": ["User"],
+            "summary": "Turn admin",
+            "description": "Change the admin status of an user",
+            "parameters": [
+               {
+                  "name": "user_id",
+                  "in": "path",
+                  "type": "string",
+                  "required": true
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "Updated",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "type": "object",
+                           "properties": {
+                              "id": {
+                                 "type": "string"
+                              },
+                              "name": {
+                                 "type": "string"
+                              },
+                              "admin": {
+                                 "type": "boolean",
+                                 "example": true
+                              },
+                              "email": {
+                                 "type": "string"
+                              },
+                              "created_at": {
+                                 "type": "string"
+                              },
+                              "updated_at": {
+                                 "type": "string"
+                              }
+                           }
+                        }
+                     }
+                  }
+               },
+               "404": {
+                  "description": "Não existe user com esse id"
+               }
+            }
+         }
+      },
+      "/users/:user_id": {
+         "get": {
+            "tags": ["User"],
+            "summary": "Return a user",
+            "description": "It will return a User profile",
+            "parameters": [
+               {
+                  "name": "user_id",
+                  "in": "path",
+                  "type": "string",
+                  "required": true
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "Success",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "type": "object",
+                           "properties": {
+                              "id": {
+                                 "type": "string"
+                              },
+                              "name": {
+                                 "type": "string"
+                              },
+                              "admin": {
+                                 "type": "boolean"
+                              },
+                              "email": {
+                                 "type": "string"
+                              },
+                              "created_at": {
+                                 "type": "string"
+                              },
+                              "updated_at": {
+                                 "type": "string"
+                              }
+                     
+                           }
+                        }
+                     }
+                  }
+               },
+               "400": {
+                  "description": "Não existe user com esse id"
+               }
+         }
+      }
+      }
+   }
+}
